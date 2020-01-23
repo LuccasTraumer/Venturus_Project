@@ -7,7 +7,7 @@ export class UserViewModel{
     readonly userLogin: string;
     @IsNotEmpty()
     @Length(3,10)
-    readonly userName: string;
+    userName: string;
     @IsNotEmpty()
     @Length(3,10) 
     readonly password: string;
