@@ -24,8 +24,17 @@ export class UserService {
 
     createNewUsers(newUsers: UserViewModel[]){
         const exist = this.userRepository.getUsers();
-        let include = [];
-        newUsers.map(user => exist.find(user => (user) ? 'Exist' : include.push(user)))
+        const include = [];
+        newUsers.map(user => {
+            const found = exist.find(existUser => {
+                if (user.userName === existUser.userName &&
+                    user.userLogin === existUser.userLogin)
+                    return existUser;
+            });
+            if (!found) {
+                this.userRepository.createUser(user);
+            }
+        });
         return this.userRepository.createUsers(include);
     }
 

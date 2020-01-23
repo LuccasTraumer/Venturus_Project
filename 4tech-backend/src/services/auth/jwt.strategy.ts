@@ -14,9 +14,9 @@ export const secretKey = 'insterstellar';
 export class JwtStrategy extends PassportStrategy(Strategy){
     constructor() {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration: false,
-            secretOrKey: secretKey,
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Vai extrair as informações do Header da Requisição
+            ignoreExpiration: false,  // Vai ignorar a inspiração
+            secretOrKey: secretKey, // Qual vai ser a chave secreta 
         });
     }
 

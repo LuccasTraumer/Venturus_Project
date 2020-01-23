@@ -18,7 +18,7 @@ export class UserController {
         
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
    @Get()
         retornUsers(){
         return this.userService.getUsers();
@@ -35,5 +35,9 @@ export class UserController {
     @Delete()
         deleteUser(@Body() user: UserViewModel){
             return this.userService.deleteUser(user);
+        }
+    @Post('all')
+        createUsers(@Body() newUsers: UserViewModel[]){
+            return this.userService.createNewUsers(newUsers);
         }
 }
