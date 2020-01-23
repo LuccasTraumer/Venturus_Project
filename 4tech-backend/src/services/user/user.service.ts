@@ -21,7 +21,12 @@ export class UserService {
         }
        return this.userRepository.createUser(newUser);
     }
-
+    createNewUsers(newUsers: UserViewModel[]){
+        const exist = this.userRepository.getUsers();
+        let include = [];
+        newUsers.map(user => exist.find(user => (user) ? 'Exist' : include.push(user)))
+        return this.userRepository.createUsers(include);
+    }
     attemptLogin(login: LoginViewModel){
         const userList = this.userRepository.getUsers();
 

@@ -25,4 +25,8 @@ export class UserController {
         criarUsuarios(@Body() newUser: UserViewModel){
             return this.userService.createNewUser(newUser);
         }
+    @Post('/lot')
+        createUsers(@Body() newUsers: UserViewModel[]){
+            return this.userService.createNewUsers(newUsers);
+        }
 }

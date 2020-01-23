@@ -8,6 +8,10 @@ export class UserRepository {
     getUsers(){
         return this.db;
     }
+    createUsers(newUsers: UserViewModel[]){
+        newUsers.map(user => this.createUser(user));
+        return 'Users Add with sucess!';
+    }
     createUser(newUser: UserViewModel){
         this.db.push(newUser);
         return 'User sucessfully added';
