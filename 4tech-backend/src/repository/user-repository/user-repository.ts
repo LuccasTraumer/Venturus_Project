@@ -3,7 +3,9 @@ import { UserViewModel } from 'src/domain/UserViewModel';
 
 @Injectable()
 export class UserRepository {
-    db:UserViewModel[] = [];
+    db:UserViewModel[] = [
+        new UserViewModel('joao', 'jooao', '123')
+    ];
 
     getUsers(){
         return this.db;
