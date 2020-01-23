@@ -21,11 +21,40 @@ export class UserService {
         }
        return this.userRepository.createUser(newUser);
     }
+
     createNewUsers(newUsers: UserViewModel[]){
         const exist = this.userRepository.getUsers();
         let include = [];
         newUsers.map(user => exist.find(user => (user) ? 'Exist' : include.push(user)))
         return this.userRepository.createUsers(include);
+    }
+
+    alterUser(user: UserViewModel){
+        const userList = this.userRepository.getUsers();
+
+        const existingUsers = userList.find(x => 
+            x.userLogin === user.userLogin && 
+            x.password === user.password
+        );
+        if(!existingUsers){
+            throw new BadRequestException('User dont exist, Create a User for Alter him');
+        }else{
+            return this.userRepository.alterUser(user);
+        }
+    }
+    deleteUser(user: UserViewModel){
+        const userList = this.userRepository.getUsers();
+
+        const existingUser = userList.find(elem => 
+            elem.userLogin === user.userLogin && 
+            elem.password === user.password &&
+            elem.userName === user.userName
+        );
+        if(!existingUser){
+            throw new BadRequestException('User dont exist for delete! ');
+        }else{
+            return this.userRepository.deleteUser(user);
+        }
     }
     attemptLogin(login: LoginViewModel){
         const userList = this.userRepository.getUsers();

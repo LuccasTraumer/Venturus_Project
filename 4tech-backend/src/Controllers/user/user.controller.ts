@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
 import { UserService } from 'src/services/user/user.service';
 import { UserViewModel } from 'src/domain/UserViewModel';
 
@@ -25,8 +25,13 @@ export class UserController {
         criarUsuarios(@Body() newUser: UserViewModel){
             return this.userService.createNewUser(newUser);
         }
-    @Post('/lot')
-        createUsers(@Body() newUsers: UserViewModel[]){
-            return this.userService.createNewUsers(newUsers);
+
+    @Put()
+        alterUser(@Body() user: UserViewModel){
+            return this.userService.alterUser(user);
+        }
+    @Delete()
+        deleteUser(@Body() user: UserViewModel){
+            return this.userService.deleteUser(user);
         }
 }
