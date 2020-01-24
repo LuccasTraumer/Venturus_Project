@@ -27,13 +27,7 @@ export class UserRepository {
 
         return 'User altered with sucess!'
     }
-    deleteUser(user: UserViewModel){
-        //this.db.splice(x,1,null);
-        this.db.forEach((elem,i) => {
-            if(elem.userLogin === user.userLogin && elem.password === user.password){
-                this.db[i] = null;
-                return 'deleted!';
-            }
-        });
+    deleteUser(index: number){
+        this.db.splice(index,1);
     }
 }

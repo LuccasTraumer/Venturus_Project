@@ -29,13 +29,13 @@ export class UserService {
             const found = exist.find(existUser => {
                 if (user.userName === existUser.userName &&
                     user.userLogin === existUser.userLogin)
-                    return existUser;
+                    return true;
             });
             if (!found) {
                 this.userRepository.createUser(user);
             }
         });
-        return this.userRepository.createUsers(include);
+        //return this.userRepository.createUsers(include);
     }
 
     alterUser(user: UserViewModel){
@@ -53,16 +53,16 @@ export class UserService {
     }
     deleteUser(user: UserViewModel){
         const userList = this.userRepository.getUsers();
-
-        const existingUser = userList.find(elem => 
-            elem.userLogin === user.userLogin && 
-            elem.password === user.password &&
-            elem.userName === user.userName
-        );
-        if(!existingUser){
+        let index;
+        const exist = userList.forEach((elem, ind)=> {
+            if(user.userLogin === elem.userLogin && user.password === elem.password){
+                index = ind
+            }
+        })
+        if(index === null){
             throw new BadRequestException('User dont exist for delete! ');
         }else{
-            return this.userRepository.deleteUser(user);
+            return this.userRepository.deleteUser(index);
         }
     }
     attemptLogin(login: LoginViewModel){
