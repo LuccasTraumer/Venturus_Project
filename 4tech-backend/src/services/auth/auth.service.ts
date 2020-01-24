@@ -17,7 +17,8 @@ export class AuthService {
             throw new BadRequestException('User Login or User Password incorrect!');
         }else{
             return {
-                acess_token: this.jwtService.sign({status: 'Autorized!'})
+                acess_token: this.jwtService.sign({status: 'Autorized!'}),
+                userId: user._id,
             };
         }
     }
