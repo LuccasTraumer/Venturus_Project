@@ -11,9 +11,9 @@ export class UserService {
     getUsers(){
         return this.userRepository.getUsers();
     }
-
-    createNewUser(newUser: UserViewModel){
-        const userList = this.userRepository.getUsers();
+    
+    async createNewUser(newUser: UserViewModel){
+        const userList = await this.userRepository.getUsers();
 
         const existingUser = userList.find( x => x.userName === newUser.userName);
         if(existingUser){
@@ -21,21 +21,26 @@ export class UserService {
         }
        return this.userRepository.createUser(newUser);
     }
-
+    /*
     createNewUsers(newUsers: UserViewModel[]){
         const exist = this.userRepository.getUsers();
-        const include = [];
+        let userExist = '';
         newUsers.map(user => {
             const found = exist.find(existUser => {
                 if (user.userName === existUser.userName &&
                     user.userLogin === existUser.userLogin)
-                    return true;
+                    {
+                        userExist += user.userName + ",";
+                    }
             });
             if (!found) {
                 this.userRepository.createUser(user);
             }
-        });
-        //return this.userRepository.createUsers(include);
+        },
+        );
+        if(userExist != null){
+            return `Users ${userExist} already exist in database`;
+        }
     }
 
     alterUser(user: UserViewModel){
@@ -65,8 +70,9 @@ export class UserService {
             return this.userRepository.deleteUser(index);
         }
     }
-    attemptLogin(login: LoginViewModel){
-        const userList = this.userRepository.getUsers();
+    */
+    async attemptLogin(login: LoginViewModel){
+        const userList = await this.userRepository.getUsers();
 
         const foundLogin = userList.find( x => 
             x.userLogin == login.userLogin && 

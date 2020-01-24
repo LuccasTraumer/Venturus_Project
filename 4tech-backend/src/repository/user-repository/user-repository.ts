@@ -1,23 +1,25 @@
 import { Injectable, Get, BadRequestException } from '@nestjs/common';
 import { UserViewModel } from 'src/domain/UserViewModel';
-
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from 'src/domain/schemas/user.schema';
 @Injectable()
 export class UserRepository {
-    db:UserViewModel[] = [
-        new UserViewModel('joao', 'jooao', '123')
-    ];
+    constructor(@InjectModel('User')private readonly userCollection: Model<User>){
 
-    getUsers(){
-        return this.db;
     }
-    createUsers(newUsers: UserViewModel[]){
-        newUsers.map(user => this.createUser(user));
-        return 'Users Add with sucess!';
+
+    async getUsers(): Promise<User[]>{
+        return await this.userCollection
+        .find()
+        .lean();
     }
-    createUser(newUser: UserViewModel){
-        this.db.push(newUser);
-        return 'User sucessfully added';
+
+    async createUser(newUser: UserViewModel){
+        const user = this.userCollection(newUser); // Vai tentar fazer uma Schema
+        return await user.save();
     }
+    /*
     alterUser(user: UserViewModel){
         this.db.map(elem => {
             if(elem.userLogin === user.userLogin && elem.password === user.password){
@@ -29,5 +31,5 @@ export class UserRepository {
     }
     deleteUser(index: number){
         this.db.splice(index,1);
-    }
+    }*/
 }

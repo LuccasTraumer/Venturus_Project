@@ -10,8 +10,8 @@ export class AuthService {
         private userService: UserService, 
         private jwtService: JwtService){}
 
-    login(login : LoginViewModel){
-        const user = this.userService.attemptLogin(login);
+    async login(login : LoginViewModel){
+        const user = await this.userService.attemptLogin(login);
 
         if(!user){
             throw new BadRequestException('User Login or User Password incorrect!');
