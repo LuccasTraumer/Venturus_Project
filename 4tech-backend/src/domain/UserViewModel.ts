@@ -8,6 +8,7 @@ export class UserViewModel{
         this.userName = userName ,
         this.password = password
     }
+    readonly _id: string;
     @IsNotEmpty()
     @Length(3,10)
     readonly userLogin: string;

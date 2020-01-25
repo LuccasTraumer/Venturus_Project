@@ -45,31 +45,11 @@ export class UserService {
     }
 
     async alterUser(user: UserViewModel){
-        const userList = await this.userRepository.getUsers();
-
-        const existingUsers = userList.find( x => 
-            x.userLogin === user.userLogin && 
-            x.password === user.password
-        );
-        if(!existingUsers){
-            throw new BadRequestException('User dont exist, Create a User for Alter him');
-        }else{
-            return await this.userRepository.alterUser(user);
-        }
+        const update = this.userRepository.alterUser(user);
     }
     async deleteUser(user: UserViewModel){
-        const userList = await this.userRepository.getUsers();
-        let index;
-        const exist = userList.forEach((elem, ind)=> {
-            if(user.userLogin === elem.userLogin && user.password === elem.password){
-                index = ind
-            }
-        })
-        if(index === null){
-            throw new BadRequestException('User dont exist for delete! ');
-        }else{
-            return await this.userRepository.deleteUser(index);
-        }
+        
+        return await this.userRepository.deleteUser(user);
     }
     
     async attemptLogin(login: LoginViewModel){

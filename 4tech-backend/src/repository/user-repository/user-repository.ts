@@ -1,6 +1,7 @@
 import { Injectable, Get, BadRequestException } from '@nestjs/common';
 import { UserViewModel } from 'src/domain/UserViewModel';
 import { InjectModel } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/domain/schemas/user.schema';
 @Injectable()
@@ -23,20 +24,20 @@ export class UserRepository {
     }
     
     async alterUser(user: UserViewModel){
-        const usersExist = await this.getUsers();
-        usersExist.forEach((elem)=>{
-            if(elem.userLogin === user.userLogin && elem.password === user.password){
-                elem.userName = user.userName;
-            }
-        })
-        
+         //const usersExist = await this.userCollection.findByIdAndUpdate(mongoose.mongo.ObjectId(user._id), user);
+         const filter = {userLogin: user.userLogin, password: user.password};
+         const update = {userName: user.userName};
 
-        return 'User altered with sucess!'
+         await this.userCollection.findOneAndUpdate(filter,update);
+            return 'sucess'
+
     }
-    async deleteUser(index: number){
-        const users = await this.userCollection;
-
-        await users.splice(index,1);
+    async deleteUser(user: UserViewModel){
+        if(await this.userCollection.deleteOne({userLogin: user.userLogin, password: user.password})){
+            return 'deleted !'
+        }else{
+            return 'user dont exist for deleted!'
+        }
         
     }
 }

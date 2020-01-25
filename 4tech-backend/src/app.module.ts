@@ -21,6 +21,7 @@ import { UserActivityService } from './services/user-activity/user-activity.serv
       // Para nao importar as antigas confs
       useNewUrlParse: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     }),
     MongooseModule.forFeature([
       { name: 'User', schema: UserSchema},
