@@ -28,7 +28,7 @@ export class UserController {
         criarUsuarios(@Body() newUser: UserViewModel){
             return this.userService.createNewUser(newUser);
         }
-        /*
+        
     @Put()
         alterUser(@Body() user: UserViewModel){
             return this.userService.alterUser(user);
@@ -41,6 +41,6 @@ export class UserController {
         createUsers(@Body() newUsers: UserViewModel[]){
             return this.userService.createNewUsers(newUsers);
         }
-        */
+        
         
 }

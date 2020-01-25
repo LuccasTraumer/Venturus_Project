@@ -6,30 +6,37 @@ import { User } from 'src/domain/schemas/user.schema';
 @Injectable()
 export class UserRepository {
     constructor(@InjectModel('User')private readonly userCollection: Model<User>){
-
+        
     }
 
+    
     async getUsers(): Promise<User[]>{
-        return await this.userCollection
+        const tes = await this.userCollection
         .find()
         .lean();
+        return tes;
     }
 
     async createUser(newUser: UserViewModel){
         const user = this.userCollection(newUser); // Vai tentar fazer uma Schema
         return await user.save();
     }
-    /*
-    alterUser(user: UserViewModel){
-        this.db.map(elem => {
+    
+    async alterUser(user: UserViewModel){
+        const usersExist = await this.getUsers();
+        usersExist.forEach((elem)=>{
             if(elem.userLogin === user.userLogin && elem.password === user.password){
                 elem.userName = user.userName;
             }
-        });
+        })
+        
 
         return 'User altered with sucess!'
     }
-    deleteUser(index: number){
-        this.db.splice(index,1);
-    }*/
+    async deleteUser(index: number){
+        const users = await this.userCollection;
+
+        await users.splice(index,1);
+        
+    }
 }
