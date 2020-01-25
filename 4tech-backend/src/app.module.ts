@@ -13,6 +13,9 @@ import { UserSchema } from './domain/schemas/user.schema';
 import { UserActivityController } from './Controllers/user-activity/user-activity.controller';
 import { UserActivitySchema } from './domain/schemas/user-activity-schema';
 import { UserActivityService } from './services/user-activity/user-activity.service';
+import { UserActivityRepository } from './repository/user-repository/user-activity-repository/user-activity.repository';
+import { WebSocketGateway } from '@nestjs/websockets';
+import { WebscoketGateway } from './webscoket/webscoket.gateway';
 
 @Module({
   imports: [
@@ -30,11 +33,11 @@ import { UserActivityService } from './services/user-activity/user-activity.serv
     ]),
     JwtModule.register({
       secret: secretKey, signOptions: {
-        expiresIn: '3m',
+        expiresIn: '1000m',
       },
     }),
   ],
   controllers: [AppController,UserController,AuthController,UserActivityController],
-  providers: [AppService,UserService,UserRepository,AuthService, JwtStrategy,UserActivityService],
+  providers: [AppService,UserService,UserRepository,AuthService, JwtStrategy,UserActivityService,UserActivityRepository,WebscoketGateway],
 })
 export class AppModule {}
