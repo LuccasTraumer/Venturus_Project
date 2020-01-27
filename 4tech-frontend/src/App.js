@@ -1,13 +1,19 @@
 import React from 'react';
 import './App.css';
 import Login from './containers/Login/Login';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import TimeLine from './containers/Login/timeline/timeline';
+
 
 function App(){
-    const name = 'Danilo'
     return(
-        <div className="App"> 
-            <Login name={name}></Login>
-        </div>
+        <Router>
+            <Switch>
+                <Route exact path="/" component={Login}/>
+                <Route exact path="/timeline" component={TimeLine}/>
+                <Redirect to="/" />
+            </Switch>
+        </Router>
     );
 }
 
