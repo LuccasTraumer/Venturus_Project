@@ -33,7 +33,7 @@ import { WebscoketGateway } from './webscoket/webscoket.gateway';
     ]),
     JwtModule.register({
       secret: secretKey, signOptions: {
-        expiresIn: '1000m',
+        expiresIn: '10000m',
       },
     }),
   ],
